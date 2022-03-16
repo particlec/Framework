@@ -1,0 +1,15 @@
+react.children 使用:
+
+jsx 是 react.createElement(component,pops,...children)
+
+一般
+<buttun style={{color:"blue"}}>
+ title
+</buttun>
+
+实际上等于
+react.createElement(
+buttun,
+{color:"blue"},
+"title"
+)

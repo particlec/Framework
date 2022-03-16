@@ -1,0 +1,20 @@
+当传的是 null 时，接收的是 'null'
+
+
+
+
+
+
+
+
+
+
+window.localStorage.setItem('groupId',undefined);
+undefined
+window.localStorage.getItem('groupId')
+'undefined'
+
+window.localStorage.setItem('groupId',null);
+undefined
+window.localStorage.getItem('groupId')
+'null'

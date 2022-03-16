@@ -1,0 +1,109 @@
+const allPatches = {};
+let INDEX = 0;
+function diff(vDom1, vDom2) {
+    walk(vDom1, vDom2, INDEX);
+    return allPatches;
+}
+
+//  diff算法：
+//  从根节点开始：
+//  if 如果新旧 根节点类型不一样 直接替换
+//  if 还有根节点 出现新建、删除的情况
+//  if 根节点一样
+//      然后开始遍历比较其子节点   不是单纯的 同级比较 而是先序遍历比较
+//       color: ${(props) => {
+//       console.log(2);
+//       }};
+//     用这个看key看div的渲染顺序，真实dom除了第一次更新，受到hook改变时，的渲染顺序也是 先序遍历
+
+// 同一层比较：
+//    无key：
+//      根据顺序添加编号：
+//      多了就删除、少了就添加、不同类型就直接替换、如果类型一样 新建 一个替换-className-Style等元素
+//    有key：
+//     根据顺序添加编号：
+//     多了就删除、少了就添加、不同类型就直接替换、如果类型一样-先看新需要的key 在旧里面有没有 如果有直接移动过来 只有相同的类型才会使用 之前的key
+
+//  当 DOM 处于同一层级时，Diff 提供三个节点操作，即 删除（REMOVE_NODE）、插入（INSERT_MARKUP）、移动（MOVE_EXISTING）。
+// 加上 key 后, 同一层会比较 新旧 key 值是否存在，如果可以key存在，会比较节点是否相同。相同的话，直接移动
+// 例：
+// 旧 key=a, key=b
+// 新 key=b,key=a
+// 如果新旧在同一层，并且key=a，key=b的节点相同，直接移动就行了，不用新增删除
+
+// 由于其比较方法
+//          不正规操作div 会导致算法的增加
+// key 的作用？
+// diff 的实质对象? 根据对象更新真实dom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function walk(oldNode, newNode, index) {
+    const currentPatches = [];
+    if (!newNode) {
+        currentPatches.push({ type: "REMOVE" });
+    } else if (typeof oldNode === "string" && typeof newNode === "string") {
+        if (oldNode !== newNode) {
+            currentPatches.push({ type: "TEXT", text: newNode });
+        }
+    } else if (newNode && oldNode.type === newNode.type) {
+        const patch = diffProps(oldNode.props, newNode.props);
+        patch && currentPatches.push(patch);
+        oldNode.children &&
+        oldNode.children.forEach((child, idx) => {
+            walk(child, newNode.children && newNode.children[idx], ++INDEX);
+        });
+    } else {
+        currentPatches.push({ type: "REPLACE", newNode });
+        INDEX += getTreeCount(oldNode) - 1;
+    }
+    if (currentPatches.length > 0) {
+        allPatches[index] = currentPatches;
+    }
+}
+
+function diffProps(oldProps, newProps) {
+    const patch = {};
+    Object.keys(oldProps).forEach((key) => {
+        if (oldProps[key] !== newProps[key]) {
+            patch.attrs = { [key]: newProps[key] };
+        }
+    });
+    Object.keys(newProps).forEach((key) => {
+        if (!oldProps[key]) {
+            patch.attrs = { [key]: newProps[key] };
+        }
+    });
+    if (Object.keys(patch).length) {
+        patch.type = "ATTRS";
+        return patch;
+    }
+}
+
+function getTreeCount(node) {
+    let count = 0;
+    if (node.children) {
+        node.children.forEach((element) => {
+            count += getTreeCount(element);
+        });
+        count += 1;
+    } else {
+        count = 1;
+    }
+    return count;
+}
+
+export { diff };

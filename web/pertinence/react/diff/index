@@ -1,0 +1,36 @@
+总流程:
+
+第一个创建：react 首先根据代码 创建 createElement 的对象， 然后创建 虚拟dom 也就是fiber树，根据fiber树 渲染出真实dom，这个过程是很慢的
+
+根据hook 的改变
+
+创建新的ReactElement 对象
+
+用 diff 算法 比较旧fiber树 与新的ReactElement 对象，生成新的fiber子节点
+
+
+iff算法就是比较 新旧虚拟dom 的差异部分 patches
+最后 把patches更新到 真实dom中,进行局部更新真实dom
+
+
+
+
+
+
+
+
+
+
+简单模拟出diff 的流程需要：
+
+创建虚拟dom：
+React通过createElement创建虚拟DOM,
+虚拟DOM对象有`type`,`props`,`children`三个属性。
+type 的类型 有HTML,COMPONENT,TEXT
+// 先为每个节点判断添加类型
+// 然后为每个子节点添加数量
+// 遍历其所有子节点
+
+diff比较差异:
+
+patches差异部分代码

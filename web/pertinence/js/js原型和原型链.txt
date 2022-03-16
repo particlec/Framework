@@ -1,0 +1,59 @@
+解决的问题： js 构造函数里的属性和方法 并不能在每个 new中共享，而是每个new中都克隆了一份，极大的增加了前端的内存，
+
+例：
+function Star(uname, age) {
+  this.uname = uname;
+  this.age = age;
+  this.sing = function() {
+    console.log('I can sing！');
+  }
+}
+var ldh = new Star('刘德华', 20);  根据Star开辟了内存
+var zxy = new Star('张学友', 21);    根据Star开辟了内存
+var pyy= new Star('彭于晏', 21);    根据Star开辟了内存
+
+JS创始人Brendan Eich决定为构造函数设置一个prototype属性，共享Star的内存。（prototype属性在普通对象、构造函数里都存在）
+
+prototype：指向一个原型的对象，该对象里包含函数实例共享的方法和属性
+实例只能继承构造函数原型上的属性和方法
+
+例：
+function Star(uname, age) {
+  this.uname = uname;
+  this.age = age;
+  this.sing = function() {
+    console.log('I can sing！');
+  }
+}
+Star.sex = '男';
+Star.prototype.money = 1000000000;
+var ldh = new Star('刘德华', 20);
+console.log(ldh.sex);  // undefine 说明实例只能继承构造函数原型上的属性和方法
+console.log(ldh.money); // 1000000000
+
+构造器（constructor）：指向构造函数
+
+function Star(uname, age) {
+    this.uname = uname;
+    this.age = age;
+    this.sing = function() {
+      console.log('I can sing！');
+    }
+  }
+  Star.sex = '男';
+  Star.prototype.money = 1000000000;
+  var ldh = new Star('刘德华', 20);
+  console.log(Star.prototype.constructor);  
+  console.log(Star.prototype.constructor === Star); // 结果为 true，说明Star原型对象的constructor指向Star本身
+  console.log(ldh.constructor);
+  console.log(ldh.constructor === Star);
+ 
+隐式原型（proto）
+每个函数都有一个prototype，即显式原型。
+每个实例对象都有一个__proto__，即隐式原型。
+对象的隐式原型的值指向其对应构造函数的显式原型的值。
+
+构造函数  Star.prototype ->  Star原型对象   <-   ldh.__proto__   ldh 对象实例
+构造函数    <- constructor    Star原型对象
+
+原型链 ：原型链就是根据prototype和__proto__连接起来的一个原型链条

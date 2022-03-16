@@ -1,0 +1,10 @@
+file 文件是不能被深拷贝和浅拷贝的,原因未知
+let temporaryFileArr = JSON.parse(JSON.stringify(file));
+如此复制出来的对象只有uid属性很奇怪
+
+
+但是可以 新建一个file对象，但是 uid等相关属性没有继承，原因未知
+ let updateFileName = new File([file], packNameSubstring);
+ updateFileName.uid = 'poiuytrewq';
+
+

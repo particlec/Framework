@@ -1,0 +1,9 @@
+默认static定位: 1、行内元素宽度根据内容,自动填充大小 2、top、right、botton、left、z-index等相对父元素的定位失效 3、width 失效，height失效？，根据内容长度自动填充
+
+
+
+绝对定位的问题:  1、top、right、botton、left、z-index、width 、height 生效  2、绝对定位  与 static定位元素互相忽略，absolute 脱离文档流导致，与static 相当于 铁男开大
+3、绝对元素 能使用margin 但只与父组件有关，与   static定位元素互相忽略     4、通过指定元素相对于最近的非 static 定位祖先元素的偏移，所以写了 absolute 一定要要在他的父元素上加上，position：xxx(不能默认)，
+不然鬼知道它的 定位的父元素在哪里，所以   子元素使用了absolute一定要和   父元素    position:'relative' 配套使用、
+
+相对定位： position:‘relative’：在文档流中，相对原来的位置做偏移 top 、left 都是相对自己原来的位置！，不是父元素！

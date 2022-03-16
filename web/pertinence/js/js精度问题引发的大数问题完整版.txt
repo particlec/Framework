@@ -1,0 +1,92 @@
+JavaScript能表示并进行精确算术运算的整数范围为：正负2的53次方，也即从最小值-9007199254740992到最大值+9007199254740992之间的范围
+
+java long=int64  9*10 18次方
+
+js 最大计算数据  9*10  15次方
+
+
+如果是后端传了一个 int64 ，在接口获取数据前，将它转成JSONbig.parse对象例子：
+  const instance = axios.create({
+  baseURL: configs.host,
+  // 重写响应数据处理方法
+  // 主要是为了处理 Long 数字太大，精度丢失问题
+  transformResponse: [
+    function transformResponse(data) {
+      if (typeof data === 'string') {
+        try {
+          data = JSONbig.parse(data);
+        } catch (e) {}
+      }
+      return data;
+    },
+  ],
+});
+
+
+  
+90071992547409911
+JSONbig.parse(90071992547409911)=
+{
+c:[
+0: 900
+1: 71992547409911
+],
+e: 16
+s: 1
+}
+
+.tostring=90071992547409911                          
+JSONbig.parse(a)的a可以string也可以number，JSONbig.parse对位数小的数不改变例如JSONbig.parse（10）=10
+
+如果要传给后端传string，让加个注解，接收string
+
+
+如果要运算 先转成字符串，在每次最后一位相加，遍历：
+function bigNumber(string1, string2) {
+  let temporaryArr1 = string1.split(''),//  字符串转数组 '123'=['1','2','3']
+    temporaryArr2 = string2.split(''),
+    extra = false,
+    sum,
+    res = '';
+  while (temporaryArr1.length || temporaryArr2.length || extra) {
+    sum = ~~temporaryArr1.pop() + ~~temporaryArr2.pop + extra; //~~将字符串转换成数字 pop数组最后一位
+    res = (sum % 10) + res; // 记录低位数的值
+    extra = sum > 10 || sum === 10; //记录是否进一
+  }
+  return res;
+}
+
+
+// js大数相加思路
+// 先将两个数转string
+// 将string 通过 split转数组   ：'241'.split('')===['2','4','1']
+// 通过pop取数组最后一个数相加
+// 用一个变量记录 是否进一
+// 在用字符串拼接的方式 进行不同位数的拼接：'2'+'0'='20'
+
+
+
+项目实例：
+ 接收 后端的对象 中 ，可能 有一个 {id:123456789012345678},如果id里的不是string，而是Number，使用该id时，obj.id 会丢失精度，如 获得 123456789012345000，
+ 那怎么从一个 对象里 获取一个 超 9*10 15次方的数？
+
+ 1、 JSONbig第三方包，将超 精度的数字转 成一个对象，
+ json-bigint 会把超出 JS 安全整数范围的数字转为一个 BigNumber 类型的对象，对象数据是它内部的一个算法处理之后的，我们要做的就是在使用的时候转为字符串来使用。
+
+ 使用：import JSONbig from 'json-bigint';
+ 在axios处  转换 data = JSONbig.parse(data);
+
+ 2、用JSONbig特定的方法还原成 string
+
+ typeof item.id === 'object' ? JSONbig.stringify(item.id) : item.id
+
+ 3、JSONbig进击版
+
+ import JSONbig from 'json-bigint';
+ data = JSONbig({ storeAsString: true }).parse(data);  自动转完了         不要加JSONbig.stringify了
+
+
+ 往返业务
+ s === JSONbig.stringify(JSONbig.parse(s))但
+
+ o !== JSONbig.parse(JSONbig.stringify(o))                 0=123n               123n 是 BigInt数据类型 （就是反过来不支持BigInt数据类型）

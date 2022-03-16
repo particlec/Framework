@@ -1,0 +1,13 @@
+
+
+ // 理解随机数 Math.floor(Math.random() * (max - min + 1) + min)
+  // Math.floor(Math.random() * (max - min+1)+min);介绍一下
+  // Math.random()   0~1 之间随机的小数 中间间隔1
+  // 如果要 5~10之间随机的整数     中间间隔5        画一个图写中间间隔 和5 pocess
+  // Math.random() * (max - min)+min   5~10间随机的小数
+  // 于是加一个Math.round()四舍五入
+  // Math.round(Math.random() * (max - min)+min)看起来可以
+  // 但是实际上获得的数很不随机,因为Math.round()四舍五入   (5~5.5) 才是5,而 [5.5~6.5) 是6, 很明显这对5和10都不公平
+  // 所以我们最常用的是 Math.floor
+  // Math.floor（Math.random() * (max - min)+min)   由于floor的特性  获得 5~9之间的整数
+  // Math.floor（Math.random() * (max - min+1)+min)   所以要+1
