@@ -8,3 +8,21 @@ let temporaryFileArr = JSON.parse(JSON.stringify(file));
  updateFileName.uid = 'poiuytrewq';
 
 
+
+  file 文件是不能被深拷贝和浅拷贝的,原因未知
+   let temporaryFileArr = JSON.parse(JSON.stringify(file));
+   JSON.stringify(file) 发现只有 uid属性 ，其他属性不显示
+   console.log(file);各种属性都打印出来了，但是uid 是加粗的，其余属性很细
+   网上查询，粗的是可枚举属性，细的是不可枚举属性，细的enumerable为false，是不能被 for in/forEach/JSON.stringify
+   网上说Object.getOwnPropertyNames(file) 可以打印所有属性，无论是否枚举
+   但是，Object.getOwnPropertyNames(file)居然只有 ['uid'],有点懵
+   Object.getOwnPropertyNames()方法返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括Symbol值作为名称的属性）组成的数组。
+   console.log(Object.getPrototypeOf(file));
+   name: [异常：TypeError: Illegal invocation at File.s (<anonymous>:1:83)]
+   console.log(file.propertyIsEnumerable('name'));  false   确实是不可枚举
+
+ 确实不可枚举
+
+ 估计 其他属性是 不可枚举、Symbol 属性名的属性
+
+
