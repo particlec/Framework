@@ -31,6 +31,11 @@ let flag = true;
 
 https://blog.csdn.net/m0_64564920/article/details/124056295 还有几个自己看一下把（基础别看太久）
 
+1.2 说一下 http 和 https 的区别？
+ 首先他们都是超文本传输协议
 
+ 但是http 明文传输，有缺陷，  https则是ssl/tls加密传输协议
+
+ 他们的端口不一样 http 是80端口，https 是443端口。
 
 
