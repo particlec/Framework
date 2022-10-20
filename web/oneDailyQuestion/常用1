@@ -1,0 +1,36 @@
+1.1数组去重的几种方法？
+
+1.[...new set(Arr)]          为什么要[...XXX] 因为new set 是对象不是数组
+
+console.log(Array.isArray(new Set([3,4,5])))
+VM1430:1 false     new set不是数组
+
+console.log(typeof new Set([3,4,5]))
+VM1262:1 object    new set是对象
+
+2.Array.from(new Set(arr))   Array.from将类数组的对象转换成数组
+
+3. 去重本质上是数据的帅选，用filter (返回条件是true的元素组成的数组，有返回值，浅拷贝)
+
+把重复的变成false,用index，第一个下表与数组下标一致的就行
+const newArr = Arr.filter((item,index,arr)=>{
+
+return arr.index(item) === index
+})
+
+4.基础的双for循环 数一个个存到新数组里面去,每次与新数组里面数据比较一样就不push
+let Arr;
+let newArr;
+for(let i=0;i<Arr.length;i++){
+let flag = true;
+ for(let j=0;j<newArr.length;j++){
+   Arr[i]==newArr[j]?flag=false:flag
+ }
+ flag?newArr.push(arr[i]) : newArr
+}
+
+https://blog.csdn.net/m0_64564920/article/details/124056295 还有几个自己看一下把（基础别看太久）
+
+
+
+
