@@ -1,0 +1,7 @@
+Object.prototype.hasOwnProperty.call(e, "errorFields")
+
+从原型链上取，
+因为如果 e.hasOwnProperty("errorFields")
+你可以在 对象种添加  {hasOwnProperty:"errorFields"}
+
+Object.prototype.hasOwnProperty.call(e,"errorFields")

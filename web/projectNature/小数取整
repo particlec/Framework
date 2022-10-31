@@ -1,0 +1,13 @@
+1、Math.ceil()方法：向上取整，不管小数部分是多少，整数部分值都+1
+Math.ceil(3/2) 输出：2
+1
+2、Math.floor()方法：向下取整，不管小数部分是多少，整数部分值都不变，只取整数部分
+Math.floor(3/2) 输出：1
+1
+3、Math.round()方法：四舍五入取整
+Math.round(3/2) 输出：2
+1
+4、parseInt()方法：抛去小数部分，不管小数部分是多少，只取整数部分
+————————————————
+版权声明：本文为CSDN博主「xiaofiy」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/xiaofiy/article/details/125336994

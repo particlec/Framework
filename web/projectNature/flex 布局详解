@@ -1,0 +1,36 @@
+
+1、flex-direction 设置主轴
+默认为 x轴，从左到右 row
+
+y轴 ，从上到下 column
+
+reverse-颠倒   row-reverse 从右到左    column-reverse 从下到上
+
+2、子元素居中 （水平和垂直）
+
+最常使用的代码：
+ justify-content : center
+ align-items:center
+
+3、
+
+justify-content  主轴上的对其方式 （可能是x、也可能是y）
+center  居中
+flex-start 默认 （从头开始）
+flex-end  （从尾开始）
+space-around （平分所有空间）
+space-between  （贴两边，然后平分所有空间）
+
+4、
+flex-wrap 装不下的子元素是否换行（一般子元素在flex中是不会换行）
+  nowrap 不换行
+  wrap   换行
+
+5、
+align-items 侧轴（与主轴垂直的轴）     根据 flex-direction确认主轴，justify-content是主轴，align-items是与其垂直的轴
+
+align-items 单行
+align-content 多行
+
+6、rem 做不同屏幕等比
+https://blog.csdn.net/JHY97/article/details/122748060

@@ -1,0 +1,17 @@
+const refContainer = useRef(initialValue);
+
+返回一个ref 对象，该对象只有个 current 属性
+
+返回的 ref 对象在组件的整个生命周期内保持不变
+当更新 current 值时并不会 re-render ，这是与 useState 不同的地方
+
+不同渲染之间无法共享state状态值
+解释：同一个 父组件里面有两个子组件，子组件如果公用一份 useState 数据，一般情况下数据一样，
+但是如果 数据在变化中，一个用了setTimeout、等异步的方法，拿到的是最初的值
+
+如果用 useRef，异步完后，都是拿到了最新的数据
+
+使用方法
+refContainer.current = refContainer.current +1
+
+refContainer.current = 999999

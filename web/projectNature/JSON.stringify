@@ -1,0 +1,19 @@
+{JSON.stringify(arrayStruct, null, 2)}
+其实有三个入参，后面两个可选
+第一个参数：
+  要序列化的对象，没啥好说的
+
+第二个参数：可选
+  如果 是 null 或者不填，正常序列化
+  如果是  函数，对所有value 经过函数操作
+  如果是  数组，只有包含在这个数组中的属性名才会被序列化到最终的 JSON 字符串中
+
+第三个参数 ：缩进
+
+
+  实例：
+        界面展示一个序列号 对象：
+        <div style={{ border: '1px solid #d9d9d9', padding: '4px 11px' }}>
+        <pre>{JSON.stringify(arrayStruct, null, 2)}</pre>
+        </div>
+

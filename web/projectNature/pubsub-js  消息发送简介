@@ -1,0 +1,23 @@
+用法：
+安装后
+
+发送事件（react）：
+     const sendMessage = productKey => {
+         PubSub.publish('productKey', productKey);
+       };
+接收事件 :
+
+    useEffect(() => {
+       const token = PubSub.subscribe('productKey', (message, data) => {
+       params.current = Object.assign({}, params.current, { productKey: data });
+      });
+       return () => {
+         PubSub.unsubscribe(token);  //记得销毁
+       };
+     }, [props]);
+     注意：
+
+
+
+ts 中还要安装@types/pubsub-js
+父子组件 、兄弟组件间传值 （在两个同时存在的组件中传值，不能路由跳转，因为从A跳到B，B还没诞生无法接收）

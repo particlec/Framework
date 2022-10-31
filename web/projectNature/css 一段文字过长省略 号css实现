@@ -1,0 +1,5 @@
+overflow:hidden;
+text-overflow:ellipsis;
+display:-webkit-box;
+-webkit-line-clamp:2; (两行文字)
+-webkit-box-orient:vertical;    -----------css 一行超出省略
