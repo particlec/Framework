@@ -1,0 +1,43 @@
+async/await、promise和setTimeout的执行顺序?
+async function async1() {
+	console.log('async1 start');
+	await async2();
+	console.log('asnyc1 end');
+}
+async function async2() {
+	console.log('async2');
+}
+console.log('script start');
+setTimeout(() => {
+	console.log('setTimeOut');
+}, 0);
+async1();
+new Promise(function (reslove) {
+	console.log('promise1');
+	reslove();
+}).then(function () {
+	console.log('promise2');
+})
+console.log('script end');
+
+script start
+async1 start
+async2
+asnyc1 end
+
+promise1
+promise2
+setTimeOut
+
+正确的答案：
+script start
+async1 start
+async2
+promise1
+script end
+asnyc1 end
+promise2
+setTimeOut
+
+为什么promise1比asnyc1 end先出来呢？
+https://juejin.cn/post/7171002835016892453

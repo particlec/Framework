@@ -1,0 +1,165 @@
+JS 深拷贝的具体实现
+
+深拷贝一般说的是引用数据类型来说的，对于基本数据类型 是没啥区别的
+
+深拷贝 就是 开辟新的内存空间，深层拷贝，拷贝后与 原来的对象无关
+浅拷贝 第一层是开辟新的内存空间，更深层次实际是还引用，原来的对象改变，内部也会改变
+
+ 常用库 lodash
+ 使用 ：
+     npm i -save lodash
+     const _ = require("lodash");
+     let newData = _.cloneDeep(data);
+
+ 一般使用 JSON.parse(JSON.stringify())
+
+ 浅拷贝 Object.assign({},...source)  {...obj}
+
+
+深拷贝基础版: 利用for in  把对象的每个元素遍历，在利用递归自身,把内部全部复制一遍
+
+const cloneObjectFirst = (target)=>{
+   if(typeof target ==="Object"){
+   const cloneTarget = {}
+   for(const key in target){
+      cloneTarget[key] = cloneObjectFirst(target[key])
+   }
+   return cloneTarget
+  }else{
+  return target
+}}
+考虑数组：加上 const cloneTarget = Array.isArray(target)?[]:{}
+
+考虑循环引用：
+const target = {
+    field1: 1,
+    field2: undefined,
+    field4: [2, 4, 8]
+};
+
+target.field2 = target;
+ 内部就会出现 const target = {
+            target:target
+        };里面会无线循环，其实就不该这样写，其实这就是不是深拷贝考虑的问题，是你自己写的不规范
+
+解决：出现问题的实质是 对象内部的value 引用了其对象本身，导致无线循环
+加一个检测 ：当内部引用 自身时，停止内部循环直接返回一个 对象给他
+
+最终版：
+const clone =(target,map =new Map())=>{
+ if(typeof target ==='Object'){
+ let cloneTarget = Array.isArray(target)?[]:{}
+  if(map.get(target)){
+  return map.get(target)
+  }
+  map.set(target,target)
+  for(let key in target){
+   cloneTarget[key] = clone(target(key),map)
+  }
+  return cloneTarget
+ }else{
+  return target
+ }
+}
+
+本来新类型symbol、函数、日期、正则、undefined 时 会出问题，但是最新的js、node都处理了，所以
+最终版就这个了：
+ map.set(target,target) 收集本身对象，map.get(target)在内部发现引用自身时，返回存的对象，中断内部循环
+const clone =(target,map =new Map())=>{
+
+ if(typeof target ==='Object'){
+ let cloneTarget = Array.isArray(target)?[]:{}
+  if(map.get(target)){
+  return map.get(target)
+  }
+  map.set(target,target)
+  for(let key in target){
+   cloneTarget[key] = clone(target(key),map)
+  }
+  return cloneTarget
+ }else{
+  return target
+ }
+}
+
+
+在node 运行例子 ：
+const clone =(target,map =new Map())=>{
+    if(typeof target ==='Object'){
+        let cloneTarget = Array.isArray(target)?[]:{}
+        if(map.get(target)){
+            return map.get(target)
+        }
+        map.set(target,target)
+        for(let key in target){
+            cloneTarget[key] = clone(target(key),map)
+        }
+        return cloneTarget
+    }else{
+        return target
+    }
+}
+const map = new Map();
+map.set('key', 'value');
+map.set('ConardLi', 'code秘密花园');
+
+const set = new Set();
+set.add('ConardLi');
+set.add('code秘密花园');
+
+const target = {
+    field1: 1,
+    field2: undefined,
+    field3: {
+        child: 'child'
+    },
+    field4: [2, 4, 8],
+    empty: null,
+    map,
+    set,
+    bool: new Boolean(true),
+    num: new Number(2),
+    str: new String(2),
+    symbol: Object(Symbol(1)),
+    date: new Date(),
+    reg: /\d+/,
+    error: new Error(),
+    func1: () => {
+        console.log('code秘密花园');
+    },
+    func2: function (a, b) {
+        return a + b;
+    }
+};
+
+console.log(clone(target));
+
+
+// 发现没啥问题
+C:\Users\86173\Desktop\新建文件夹>node 1.js
+{
+  field1: 1,
+  field2: undefined,
+  field3: { child: 'child' },
+  field4: [ 2, 4, 8 ],
+  empty: null,
+  map: Map(2) { 'key' => 'value', 'ConardLi' => 'code秘密花园' },
+  set: Set(2) { 'ConardLi', 'code秘密花园' },
+  bool: [Boolean: true],
+  num: [Number: 2],
+  str: [String: '2'],
+  symbol: [Symbol: Symbol(1)],
+  date: 2023-01-13T01:16:22.556Z,
+  reg: /\d+/,
+  error: Error
+      at Object.<anonymous> (C:\Users\86173\Desktop\新建文件夹\1.js:40:12)
+      at Module._compile (node:internal/modules/cjs/loader:1159:14)
+      at Module._extensions..js (node:internal/modules/cjs/loader:1213:10)
+      at Module.load (node:internal/modules/cjs/loader:1037:32)
+      at Module._load (node:internal/modules/cjs/loader:878:12)
+      at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+      at node:internal/main/run_main_module:23:47,
+  func1: [Function: func1],
+  func2: [Function: func2]
+}
+

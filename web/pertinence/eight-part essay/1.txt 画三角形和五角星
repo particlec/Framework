@@ -1,0 +1,108 @@
+1、如何用 CSS 画一个三角形？ 如何用 CSS 画一个五角星？
+
+思路： 实际用的是 div 的border，把content的宽高变成0，利用边框颜色 border 填充 成一个三角形
+
+https://blog.csdn.net/fd2025/article/details/124413951?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124413951-blog-125728646.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-124413951-blog-125728646.pc_relevant_aa&utm_relevant_index=1
+
+四步变换 ； 1有长宽--2无长宽---3等腰三角形---4直角三角形 上面链接有
+
+1、div{
+width:100px;
+height:100px;
+border-bottom: 50px solid #666;
+border-top: 50px solid #999;
+border-left:50px solid #000;
+border-right:50px solid #333;
+}
+
+3、等腰 左右透明，底部有颜色
+div{
+width:0;
+height:0;
+border-bottom:50px solid #666;
+border-left:50px solid transparent;
+border-right:50px solid transparent;
+}
+
+4、直角  边宽一样，一边有颜色，相邻边透明就行
+div{
+width:0;
+height:0;
+border-bottom:50px solid #666;
+border-left:50px solid transparent;
+}
+
+如何用 CSS 画一个五角星？
+
+思路：1、观察得 一个倒的等腰三角形 分别 顺时针、和逆时针 72°得到的图案  ，因为每个角  36°，
+参照：https://blog.csdn.net/banou8086/article/details/101526004?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-101526004-blog-121314693.pc_relevant_landingrelevant&spm=1001.2101.3001.4242.1&utm_relevant_index=3
+
+ div{
+  width: 0;
+
+             height: 0;
+
+             border-top: 50px solid yellow;
+
+             border-left: 72px solid transparent;
+
+             border-right: 72px solid transparent;
+
+             /* margin-top: 100px; */
+
+             position: relative;
+
+
+ }
+  div::before{
+
+             content: "";
+
+             display: block;
+
+             width: 0;
+
+             height: 0;
+
+             border-top: 50px solid red;
+
+             border-left: 72px solid transparent;
+
+             border-right: 72px solid transparent;
+
+             transform: rotate(72deg);
+
+             position: absolute;
+
+             top: -50px;
+
+             left: -72px;
+
+         }
+
+         div::after{
+
+             content: "";
+
+             display: block;
+
+             width: 0;
+
+             height: 0;
+
+             border-top: 50px solid green;
+
+             border-left: 72px solid transparent;
+
+             border-right: 72px solid transparent;
+
+             transform: rotate(-72deg);
+
+             position: absolute;
+             top: -50px;
+
+             left: -72px;
+
+
+
+         }
