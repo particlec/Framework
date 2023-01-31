@@ -1,0 +1,73 @@
+前端异步调用的历史？
+https://juejin.cn/post/6844903626096246792
+
+js 各种异步编程的实现：
+1、 回调函数 CallBack 就是异步成功后   调用一个回调函数 容易一层又一层出现 回调地狱 多层后可读性不好
+ 不直观，
+2、 发布/订阅：
+https://www.cnblogs.com/luckest/p/16962989.html
+现实，我收藏一个淘宝店（订阅），让商家有货的时候，商家发信息给我（发布）
+
+例子：就是加一个调度中心，或者有监听和发布的两个方法，将该on函数 绑定监听数据变化,增加回调函数
+ 根据 回调函数运行结果 emit函数 发布-发送数据
+
+
+优点：是解耦 通过发布订阅模式进行通信，通信双方不需要有任何的联系，只需要关注彼此的事件即可
+ 缺点：订阅者被缓存在一起，如果多个订阅者和发布者层层嵌套、
+ 创建结构和缓存订阅者这两个过程需要消耗计算和内存资源，即使订阅后始终没有触发，订阅者也会始终存在于内存
+
+ 进皆：自己写一个发布订阅的方法  onload相关吗 ？
+ https://www.cnblogs.com/luckest/p/16962989.html
+
+
+
+
+ 事件监听
+ Promise对象
+ 把回调嵌套变为链式调用
+
+
+Generator   async+await 的前身
+好像和状态机？相关不知道
+Genertor 函数是es6 新增的一种异步编程的解决方案，
+语法和传统的函数完全不同；Genertor 函数的最大的特点就是可以交出函数的执行权（即暂停执行）
+
+就是加yield 会暂停，next()才会 就继续走
+
+function *myGenerator() {
+	yield 'Hello'
+	yield 'world'
+	return 'ending'
+}
+
+let MG = myGenerator()
+
+MG.next() // {value:'Hello',done:false}
+MG.next() // {value:'world',done:false}
+MG.next() // {value:'ending',done:true}
+MG.next() // {value:'undefined',done:false}
+
+
+异步终极方案-async+await
+async函数返回一个promise对象
+async 函数就是 Generator 函数的语法糖
+
+ await 就是  yield 包了一层逻辑 这行运行完不报错就继续走，所以需要try 包一下，否则报错了程序不会继续走了
+async function read(){
+ try{
+ let a=await '123';
+     console.log(a);
+     let b=await 4;
+     console.log(b);
+ }catch()
+
+}
+read()
+
+https://juejin.cn/post/7186224254990417979
+
+异步接口调用相关
+有20个异步请求，如何保持同时三个的并发
+小提示：我这里直接聊的实现思路：用Promise.race来实现
+
+连续调用接口a、b、c接口，出现的问题？

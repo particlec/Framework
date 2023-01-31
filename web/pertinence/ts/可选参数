@@ -1,0 +1,8 @@
+
+function mySplice(test:number , start?: number,end?:number){
+ mySplice(1)
+mySplice()
+mySplice(1,2)
+ 可选参数不能出现在必选参数前面  必须在必选函数后面  一般配合类型注解使用
+ }
+ 是可以有可选参数的，之前swagger 获取接口是可行的

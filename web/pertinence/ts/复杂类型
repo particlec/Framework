@@ -1,0 +1,19 @@
+typeof
+可以根据已有的值 来获取值的类型  来简化代码的书写
+
+如果重复的类型很多，并且复杂，可以简写
+interface P{
+  name:string
+  age:number
+}
+const person :Person ={name:'1',age:23}
+
+type TPerson = typeof person; (直接推断)
+
+keyof
+
+interface Person {
+    name: string
+    age: number
+}
+type K1 = keyof Person // "name" | "age"

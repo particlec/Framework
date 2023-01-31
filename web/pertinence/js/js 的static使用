@@ -1,0 +1,14 @@
+  发现低代码的项目中使用了static 方法
+  static getMetaPropertiesMap(): Record<string, any> {
+    return {
+      pageNo: 1,
+    };
+  }
+  在XXX类组件中，加了static，可以直接XXX.getMetaPropertiesMap()使用
+  否则         不加static， 要let b = new XXX,b.getMetaPropertiesMap() 才能用
+
+  在XXX函数式组件中，直接用XXX.getMetaPropertiesMap()就行
+
+
+  其他具体:
+  https://blog.csdn.net/persis_in/article/details/123310777
