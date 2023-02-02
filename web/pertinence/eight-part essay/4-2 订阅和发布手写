@@ -1,0 +1,49 @@
+前端异步的解决办法之一
+
+加一个中间调用组件 ，订阅函数on(事件名称，回调函数)，发布函数 emit(事件名称，发布的数据)
+要支持链式操作，on 、emit 都会返回 事件
+
+eve.on('ready',function(d){
+    arr.push(d);
+    if(arr.length==2){
+        //两个文件的数据
+        console.log(arr);
+    }
+});
+fs.readFile('./a.txt','utf8',function(err,data){
+    eve.emit('ready',data);
+});
+
+简单手写一个前端调度中心
+
+class EventBus {
+  constructor(){
+  this.handles={};
+  }
+
+on(eventType,handle){
+ if(!this.handles.hasOwnProperty(eventType)){
+ this.handles[eventType]=[]
+ }
+ if(typeof handle ==='function'){
+ this.handles[eventType].push(handle)
+ }else{
+ console.log("缺少回调函数")
+ }
+ return this
+}
+
+ emit(eventType,...args){
+ if(){
+ }
+
+
+ }
+
+
+
+
+
+
+}
+
