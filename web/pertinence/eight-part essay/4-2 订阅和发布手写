@@ -3,6 +3,14 @@
 加一个中间调用组件 ，订阅函数on(事件名称，回调函数)，发布函数 emit(事件名称，发布的数据)
 要支持链式操作，on 、emit 都会返回 事件
 
+ 订阅者   ：知道什么事件、知道做什么  on(事件名称，回调函数)
+ on 把事件存起来 简单存储例子  {事件名称：[回调函数1]}
+
+ 发布者 ：  知道什么时候调,知道参数具体是什么，但是不知道具体执行什么，知道什么时候调emit
+ 调 emit，传具体入参调用，可以传很多个参数
+
+ 很解耦，但是调emit的时间我们要知道
+
 eve.on('ready',function(d){
     arr.push(d);
     if(arr.length==2){
@@ -34,11 +42,20 @@ on(eventType,handle){
 }
 
  emit(eventType,...args){
- if(){
+ if(this.handles.hasOwnProperty(eventType)){
+ this.handles[eventType].forEach((item,key,arr)=>{
+ // item 是一般是一个函数，args是参数，item.apply(null,args)执行函数
+  item.apply(null,args);
+ })
+ }else{
+ throw new Error(eventType +"事件未注册);
+ }
+
+ return this;// 实现链式操作
  }
 
 
- }
+
 
 
 
