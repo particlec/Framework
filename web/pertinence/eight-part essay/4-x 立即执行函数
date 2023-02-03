@@ -1,0 +1,14 @@
+定义一个MyPromise类,使用立即执行函数方式，防止变量全局污染
+（为什么立即执行函数可以防止变量全局污染）
+const MyPromise = (()=>{
+ return class {
+  constructor(executor){
+  }
+ }
+})()
+立即执行函数：https://cloud.tencent.com/developer/article/1656423
+1、不必为函数命名，避免了污染全局变量。
+
+2、立即执行函数内部形成了一个单独的作用域，可以封装一些外部无法读取的私有变量。
+
+3、封装变量。

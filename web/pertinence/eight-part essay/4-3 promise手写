@@ -1,0 +1,41 @@
+1.promise 是什么,解决了什么问题  https://zhuanlan.zhihu.com/p/144058361
+2.Promise的使用
+3.promise实现-源码实现 内部是如何实现来链式调用的... https://blog.csdn.net/Newbie___/article/details/107138825
+4.手写promise
+
+4.手写一个promise
+
+要注意什么：
+里面有 三种状态，
+有 resolve、reject、then方法
+resolve、reject 函数 执行时  要判断状态 不是准备状态时，说明已经调用一次了，不能再执行了
+Promise当捕捉到 错误时，执行reject
+
+
+then 入参也跟promise类似，有一个是成功回调，一个是失败回调
+ Promise状态为fulfilled执行成功回调
+then 会返回一个新的promise
+
+class MyPromise (){
+ this.PromiseResult = null //值
+ this.PromiseState = 'pending' // 状态
+ this.onFulfilledCallbacks = [] // 保持成功时的回调，将每次回调都 保存起来，后面写all 等方法
+ this.onRejectedCallbacks = [] // 保存失败时候的回调
+
+  resolve(value){
+  if(this.PromiseState !=='pending') return
+  this.PromiseState = 'fulfilled'
+  this.PromiseResult = value
+
+  while(this.onfulfilledCallbacks.length){
+  this.onfulfilledCallbacks.shit()()
+  }
+
+
+  }
+}
+
+
+
+
+
