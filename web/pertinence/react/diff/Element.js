@@ -16,7 +16,7 @@ const childNumber = {
     "MULTIPLE":"MULTIPLE"
 };
 
-
+// 提交测试
 class Element{
     constructor(tag,props,children){
         this.type=tag;
