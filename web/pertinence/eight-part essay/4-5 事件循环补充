@@ -1,0 +1,14 @@
+先按代码顺序执行，然后 把宏任务 、微任务 分别放到对应队列，
+然后先执行 微任务，最后执行宏任务
+要点：
+new Promise(resolve => {xxxx })   xxx是正常 函数运行，因为上面确定运行了resolve事件
+
+async function f() {            ===   function f() {
+  await p                              return RESOLVE(p).then(() => {
+  console.log('ok')                    console.log('ok')
+}                                      })
+                                      }
+p 是同步的，console.log('ok')才是异步，因为有promise 返回
+
+
+

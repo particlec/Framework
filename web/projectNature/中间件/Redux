@@ -1,0 +1,100 @@
+Redux redux是专门用于集中式管理状态的javascript库，他并不是react的插件库
+
+个人理解  调用订阅，数据改变，所有的数据存在一个object树中，数据共享
+（就同步数据的发布订阅模式）
+
+使用场景：
+多个组件a、b、c、d、e要用到k组件的一个状态(数据)？
+1、父组件传子组件  层级比较少可以一层一层传   或者  顶层订阅一个useContext 为什么定义方法不行
+2、让兄弟组件之间通过订阅发布  PubSub.publish、PubSub.subscribe，
+3、两个非兄弟组件传值，sessionStorage.getItem 本地缓存数据，返回时候保存当前表格页数sessionStorage
+4、Redux进行统一的状态管理，省去了层层传递、减少其他方法的混用，之前有个项目 1、2、3、4都用了，用4就可以不用都用了
+
+redux有三个核心概念，分别为actions、store、reducers
+
+actions 翻译为行动，定义你要做什么，一般要定义多个，方法名和传参，不定义具体实现
+export const creatAdd = data => ({ type: add, data })
+export const creatReduce = data => ({ type: reduce, data })
+
+store组件：初始化一个Store数据，并且绑定reducers
+import { legacy_createStore } from 'redux'
+export default legacy_createStore(countReducer)
+
+reducers 行动具体做什么  ，根据定义的行动名称，制定具体的方法
+export default function countReducer (pre = inin, action) {
+  ///从action解析出type和data
+  const { type, data } = action
+  ///通过类型进行匹配，判断怎么做
+  switch (type) {
+    case add:
+      return pre + data
+    case reduce:
+      return pre - data
+    default:
+      return pre
+  }
+}
+
+使用：store.dispatch(creatAdd(value * 1)) 调用actions方法，reducers会具体执行，store中数据改变
+     store.getState()                    调用改变后的数据
+
+数据应该挂载在root 附近
+
+新版Redux     Redux Toolkit 使用
+
+1、定义store
+import { configureStore } from "@reduxjs/toolkit"
+import todoReducer from "./todo.slice"; 根据 createSlice定义的名称来的
+import todoReducer from "./todo.getId";
+
+export default configureStore({
+    reducer: {
+        todos: todoReducer     // 比如说
+        getId：getIdReducer    // 比如说 获取用户信息一类
+        // ... 其他的 reducer
+    }
+});
+2、createSlice文件  之前的定义和怎么做集合
+const todoSlice = createSlice({
+    name: 'todo',
+    initialState,
+    // 相当于原来reducer中的case
+    reducers: {
+        // 实际运行的方法，state == initialState
+        addTodo: (state, action) => {
+            state.push(action.payload);
+        },
+    }
+});
+export const selectCount = (state: RootState) => state.todo;
+
+const todoSlice = createSlice({
+    name: 'getId',
+    initialState: {
+        value: "",
+        expire: 0,
+        host: "",
+      },
+      reducers: {
+        updateToken: (state, action: PayloadAction<Record<string, string>>) => {
+          state.value = action.payload.token;
+          state.host = action.payload.host;
+          state.expire = Date.now() + 3000 * 100;
+          return state;
+        },
+      },
+});
+
+ 顶层挂载<Provider store={store}>
+  const dispatch = useAppDispatch();
+使用 dispatch(updateToken({ host: res.data.host, token: res.data.token }));
+ action.payload ===== { host: res.data.host, token: res.data.token } 注意
+ const reduxToken = useAppSelector(selectCount);
+
+
+ 例子：https://codesandbox.io/s/github/reduxjs/redux/tree/master/examples/counter-ts?from-embed=&file=/src/features/counter/counterSlice.ts:1689-1703
+
+
+
+
+

@@ -1,0 +1,34 @@
+1、styled-components  样式里面有变量
+
+<AppViewerBody    headerHeight={headerHeight}  组件中传
+--view-mode-header-height: ${({ headerHeight }) => headerHeight}px;  样式中使用
+
+
+ <ThemeProvider theme={lightTheme}>                                  或者父组件中定义一个全局的
+  --layout-header-bg-color: ${(props) =>                             然后子组件中使用lightTheme 的属性.theme.colors.primary
+     props.color || props.theme.colors.primary};
+
+
+2、css居中  calc() calc() 函数用于动态计算长度值
+
+运算符前后都需要保留一个空格，例如：width: calc(100% - 10px)
+如果div 宽度是50px，要居中时
+div.style.left="calc(50% - 50px)";
+
+如果该组件的宽度动态变化
+动态获取数据 div.style.marginLeft = "calc(50% -"+div.clientWidth/2+"px)";
+
+
+7-30  mb 、zs、xuexi、xiushouji、xiyif、gaoweisheng、wenfandong
+
+（用flex、绝对定位不好吗？可能时他的技术栈太旧了）
+
+数组过滤虚假值
+let m = [3, 0, 6, 7, '', false,null,NaN,undefined,0];
+console.log(m.filter(Boolean));
+[3, 6, 7]
+
+let array = [3, 0, 6, 7, '', false,null,NaN,undefined,0];
+console.log(array.filter(item=>item));
+[3, 6, 7]
+

@@ -1,0 +1,31 @@
+为什么要知道BFC？
+有时候高度坍塌，为什么边距不是我想要的等系列问题
+BFC是什么？
+简单的理解：BFC就是一个块级容器，解决 子元素边界塌陷，宽度问题，
+让盒子里面的元素不影响外面的元素
+
+实例：
+1、边距重叠问题
+ A
+ B
+
+ A  margin 100px   B margin  60px
+ A、B 距离 100px ，有两个margin 边距会重叠，会取最大的那个
+
+ 解决：
+      <p>Haha</p >
+      <div class="wrap">
+      <p>Hehe</p >
+      </div>
+.wrap {
+  overflow: hidden;// 新的BFC
+  }
+ 其中一个包一层 wrap 就行了
+
+ 2. 内部浮动
+ 父 border 与子border 冲突 ，父增加 overflow: hidden;
+
+
+
+
+

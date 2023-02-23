@@ -1,0 +1,22 @@
+i18n
+
+就<butto>下一页</button>
+
+ <button>{getLangString("next_page”)}</button>
+加一个方法
+根据不同语言给不同 配置
+
+配置是自己订阅的
+
+en.json
+{
+
+	next_page: "Next Page"
+}
+
+
+cn.json
+{
+
+	next_page: "下一页"
+}

@@ -34,3 +34,11 @@ align-content 多行
 
 6、rem 做不同屏幕等比
 https://blog.csdn.net/JHY97/article/details/122748060
+
+7. 在一个 父组件 子组件 比例  1  1  2  怎么写
+
+flex: 1; 等同于 flex: 1 1 auto
+flex: 1 实际上是三个属性的缩写：flex-grow: 1; flex-shrink: 1   （flex-basis:  auto，flex-basis：0）;
+flex-grow  子组件在父组件中占的空间比例是多少
+flex-shrink  是子元素 收缩比，就是 子元素 总和 比父组件大时，收缩的比例，谁多谁收缩的多，实际面积越小， 实际面 = 子组件宽度 - 收缩的
+flex-basis   订阅的子元素的宽度 ，如果跟父组件有冲突，会等比例缩小 一般与前面两个 不一起用

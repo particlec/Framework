@@ -1,0 +1,29 @@
+redux-saga
+
+redux 的异步调用补充，调用方法时，可能要异步调用接口，从接口中获得结果，在更新数据
+
+原理：redux-saga 的原理是透传 action 到 store，然后再传一份 aciton 到 saga 组织的异步过程，
+saga 分为 watcher saga 和 worker saga。 watcher saga 判断 action 是否要处理，然后交给 wroker saga 处理
+
+自己理解：就调用方法的时候可能有异步接口，就用redux-saga，就走两步，action 到 store一份，然后在异步一份，等异步结果来了会改数据
+定义方法：
+changeUsername:(e)=>{
+    dispatch({type:'CHANGE_USERNAME',value:e.target.value});
+ },
+
+ take 获取定义事件的结果
+ const action1=yield take('CHANGE_USERNAME');
+
+ 以事件结果为入参 ，call 调用异步方法
+  const res=yield call(fetchSmart,'/login',{
+       method:'POST',
+       body:JSON.stringify({
+         username:action1.username,
+         password:action1.password
+     })
+  put 更新该事件的结果
+   yield put({type:'CHANGE_USERNAME',
+         value:res.value});
+
+
+https://juejin.cn/post/6844903635747340296#heading-10

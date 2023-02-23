@@ -1,4 +1,19 @@
-解析大方好
-params 删除 current、size 属性
+let obj = {
+            Name: "GeeksforGeeks",
+            password: "gfg@1234",
+            username: "your_geeks"
+        }
+                                从v吧vv出去ZZZAO，'/?...........,,.,,.,.,."/
+去除对象 Name、password属性
+方法1：解析大方好
+    let  {Name, password,...newObj}  = obj;
+    console.log(newObj)
 
-    let  {current, size,...sourceParams}  = params;
+方法2：  Lodash _.omit() 也可以但是可以不用
+const _ = require("lodash");
+let obj = {
+            Name: "GeeksforGeeks",
+            password: "gfg@1234",
+            username: "your_geeks"
+        }
+console.log(_.omit(obj, ['password', 'username']));
