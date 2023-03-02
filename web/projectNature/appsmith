@@ -32,3 +32,6 @@ let array = [3, 0, 6, 7, '', false,null,NaN,undefined,0];
 console.log(array.filter(item=>item));
 [3, 6, 7]
 
+3、轻量级模糊搜索 库 fuse.js
+场景 支持中文和英文搜索
+
