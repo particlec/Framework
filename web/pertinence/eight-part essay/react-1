@@ -1,0 +1,31 @@
+万物始于jsx，tsx，了解 jsx 的编译过程
+1、被babel 处理后   变成React Element
+<div>
+   <TextComponent />
+   <div>hello,world</div>
+   let us learn React!
+</div>
+===========
+React.createElement("div",null,
+  React.createElement(TextComponent,null),
+  React.createElement("div",null,"hello,world"),
+  "let us learn React!"
+)
+
+经过babel后就是用这个 React.createElement(类型，属性，子元素) 包一下
+
+2、createElement 处理后的样子   Symbol(react.element)
+
+打印一个return 的 <div/> ，发现antd本地化配置在prop-locale里
+{
+    "key": null,
+    "ref": null,
+    "props": {
+        "locale": {
+            "locale": "zh-cn",
+            "Pagination": {
+                "items_per_page": "条/页",
+
+
+
+
