@@ -26,6 +26,7 @@ React.createElement("div",null,
             "Pagination": {
                 "items_per_page": "条/页",
 
+jsx 最终形成的 fiber 结构图
 
 
 

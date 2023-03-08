@@ -1,0 +1,68 @@
+之前使用antd、@uppy/file-input 、文件上传
+1、后面可能 需要自定义样式 ，先自己实现一个， input文件上传
+
+<input type="file" accept multiple></input>
+
+type="file" 就可以上传文件了，accept接收上传的文件类型， multiple是否多选
+
+accept=“image/png” 或 accept=“.png” ——只接受 png 图片.
+accept=“image/png, image/jpeg” 或 accept=“.png, .jpg, .jpeg” ——PNG/JPEG 文件.
+accept=“image/*” ——接受任何图片文件类型.
+accept=“video/*” —— 接受任何音频视频文件类型
+
+事件监听 onChange={(e) =>{}}}  e.target.files[0] 就是用户上传的图片信息，e.target表示该DOM元素
+
+e.target.files[0].size > 2 * 1024 * 1024 // 限制上传图片文件大小
+
+e.target.files[0] 此时是一个对象 ，可以转换成Base64 格式给后端， 一般也可以直接传给 七牛云 等云存储，然后获取返回的url
+
+let reader = new FileReader()
+                reader.readAsDataURL(file)
+                reader.onload = function (result) {
+                    Base64 = result.target.result // 图片地址 Base64 格式的 可预览
+                }
+
+上传文件之后清空内容（未实现）
+获取到的files文件的value 赋值为空，但是这种方式不能彻底清理文件达到解决问题的方法，最后，外部加一个form表单，然后清空form表单里面的内容
+
+<form id="dataForm" onChange=()=>{}>
+       <input style="display: none"
+        id="file"
+        ref="files"
+        type="file"
+        onChange="uploadData(e)"
+        accept=".jpg,.docx,.pdf,.ai,.psd,.png,.gif,.bmp"
+        multiple="multiple" />
+    </form>
+
+
+记得清空form 里面的内容   e.target.reset()
+
+css样式更改（关键，一般就是特别的样式才用这个的）（未实现）
+input file 样式设置display:none; 隐藏, 或者 设置透明度 opacity设置为0，然后用一个好看的按钮代替点击，之后，在input中设置ref 用来获取数据。 js中获取ref然后链接设置样式的点击事件
+使用 label元素 与 input file控件关联,然后隐藏 input。也是一样的。只不过不用调用方法了。
+
+https://blog.csdn.net/MoXinXueWEB/article/details/125728482  ---- 参考
+
+2、antd、@uppy/file-input
+
+antd 比较完善，除非特别产品有特别的样式要求或者 项目不用antd，不然建议用这个
+
+antd 的直接读出文件 放到 fileList，   自动上传到这个地址 fileUpload.uploadUrl  ，data上传时需要的一些额外的参数
+<Upload
+            data={{ token: temporaryToken }}
+            action={fileUpload.uploadUrl}
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            onChange={handleChange}
+            onRemove={() => {
+              setFileList([]);
+            }}
+            beforeUpload={beforeUpload}
+            accept={".bmp,.jpeg,.jpg,.png,.svg"}
+          >
+            {fileList.length >= 1 ? null : uploadButton}
+          </Upload>
+
+
