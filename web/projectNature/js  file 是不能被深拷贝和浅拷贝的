@@ -2,10 +2,30 @@ file 文件是不能被深拷贝和浅拷贝的,原因未知
 let temporaryFileArr = JSON.parse(JSON.stringify(file));
 如此复制出来的对象只有uid属性很奇怪
 
+只是 JSON.parse(JSON.stringify(file)) 不呢个拷贝
+
+lodash   _.cloneDeep(file); 也不能拷贝文件
+
+但是可以读出来变成base64 在拷贝；
+
 
 但是可以 新建一个file对象，但是 uid等相关属性没有继承，原因未知
  let updateFileName = new File([file], packNameSubstring);
  updateFileName.uid = 'poiuytrewq';
+
+
+ js 自己带的 structuredClone()可以 拷贝 file 对象
+
+ 这些都可以复制：
+ JS 内置类型：Array, ArrayBuffer, Boolean, DataView, Date, Error types (those specifically listed below), Map ,
+  Object but only plain objects (e.g. from object literals), Primitive types, except symbol (aka number, string, null, undefined, boolean, BigInt),
+   RegExp, Set, TypedArray
+
+ Error types: Error, EvalError, RangeError, ReferenceError , SyntaxError, TypeError, URIError
+
+ Web/API types: AudioData, Blob, CryptoKey, DOMException, DOMMatrix, DOMMatrixReadOnly, DOMPoint, DomQuad, DomRect,
+  File, FileList, FileSystemDirectoryHandle, FileSystemFileHandle, FileSystemHandle, ImageBitmap, ImageData, RTCCertificate, VideoFrame
+
 
 
 
