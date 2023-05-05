@@ -1,0 +1,76 @@
+https://tailwindcss.com/docs/backdrop-blur
+
+<div className="bg-gray-100 h-[100%]">
+        最大宽度max-w-7xl-1280px、mx-auto--容器居中、py-6 ---上下padding6xp、 sm 当到宽度为642px 之前 paddding左右6,上下8 
+      <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+         mx-auto--容器居中、没有最大宽度
+        <div className="mx-auto max-w-none">
+        overflow-auto在元素的内容溢出该元素的边界时向该元素添加滚动条、bg-white背景色为白色、增加阴影、rounded-lg 半径圆角
+          <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+
+
+ sm:hidden 当到宽度缩小到642px 隐藏按钮
+              <div className="flex flex-1 justify-between sm:hidden">
+
+背景模糊：backdrop-blur-sm	backdrop-filter: blur(4px);
+背景颜色：bg-[#50d71e]、bg-black	background-color: rgb(0 0 0);
+bg-white	background-color: rgb(255 255 255);
+背景图片：bg-[url('/img/hero-pattern.svg')]
+
+字体大小：
+text-xs	font-size: 0.75rem; /* 12px */
+line-height: 1rem; /* 16px */
+text-sm	font-size: 0.875rem; /* 14px */
+line-height: 1.25rem; /* 20px */
+text-base	font-size: 1rem; /* 16px */
+line-height: 1.5rem; /* 24px */
+text-lg	font-size: 1.125rem; /* 18px */
+line-height: 1.75rem; /* 28px */
+text-xl、text-2xl、text-3xl ---9xl
+
+text-[14px]
+
+字体粗细：
+font-[1100]  400正常
+
+字母间距：
+tracking-tighter	letter-spacing: -0.05em;
+tracking-tight	letter-spacing: -0.025em;
+tracking-normal	letter-spacing: 0em;
+tracking-wide	letter-spacing: 0.025em;
+tracking-wider	letter-spacing: 0.05em;
+tracking-widest
+
+tracking-[.25em]
+
+行高：
+leading-none	line-height: 1;
+leading-tight	line-height: 1.25;
+leading-snug	line-height: 1.375;
+leading-normal	line-height: 1.5;
+leading-relaxed	line-height: 1.625;
+leading-loose	line-height: 2;
+
+leading-[3rem]
+
+文本对齐：
+text-left	text-align: left;
+text-center	text-align: center;
+text-right	text-align: right;
+text-justify	text-align: justify;
+text-start	text-align: start;
+text-end
+
+行高：text-sm/[17px]
+
+字体颜色：text-[#50d71e]
+
+布局：
+<div class="flex flex-row">
+  <div class="basis-1/4">01</div>
+  <div class="basis-1/4">02</div>
+  <div class="basis-1/2">03</div>
+</div>
+
+子元素 居中：
+flex items-center justify-between
