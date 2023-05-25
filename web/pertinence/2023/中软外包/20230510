@@ -1,0 +1,157 @@
+1、介绍两个你的项目？
+2、大文件如何分片？
+3、web安全、浏览器的执行过程？
+4、watch 和 computed vue3
+5、em、rem、px 和vh的区别？
+都是相对长度单位，px 显示器屏幕分辨率，em是父节点字体的大小，
+rem是r’是“root”的缩写，相对于根元素<html>的字体大小，
+vh and vw：相对于视口的高度和宽度，浏览器窗口，1%
+
+
+
+
+
+
+
+
+
+
+6、盒子居中的区别？
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+将父容器设置为弹性布局，并使用justify-content: center和align-items: center属性将子元素水平和垂直居中
+
+.element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+通过将元素的定位设置为绝对定位，并使用top: 50%和left: 50%将其移动到容器的中心，然后使用负的transform: translate(-50%, -50%)将元素自身的中心点重新定位到容器的中心。
+
+.container {
+  position: relative;
+}
+
+.element {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+在CSS中，有几种常见的方法可以使元素水平和垂直居中。以下是其中几种方法：
+
+使用display: flex和justify-content: center和align-items: center属性：
+css
+Copy code
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+将父容器设置为弹性布局，并使用justify-content: center和align-items: center属性将子元素水平和垂直居中。
+
+使用position: absolute和top: 50%和left: 50%以及负的transform: translate(-50%, -50%)属性：
+css
+Copy code
+.element {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+通过将元素的定位设置为绝对定位，并使用top: 50%和left: 50%将其移动到容器的中心，然后使用负的transform: translate(-50%, -50%)将元素自身的中心点重新定位到容器的中心。
+
+使用position: absolute和top: 0和bottom: 0和left: 0和right: 0以及margin: auto属性：
+css
+Copy code
+.container {
+  position: relative;
+}
+
+.element {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+将容器设置为相对定位，然后将元素的定位设置为绝对定位，并使用top: 0、bottom: 0、left: 0和right: 0将其拉伸到容器的四个边缘，最后使用margin: auto将元素在容器中水平和垂直居中
+
+
+
+
+
+
+
+
+
+7、loader 和 plugin的区别？
+webpack loader和plugin的区别   
+
+为什么vite 比 plugin 快？
+
+利用浏览器对原生 ESM（ES Modules）（包的打包）的支持
+只编译正在编辑的文件 ，而不是整个文件
+
+
+Vite 相对于 Webpack 在开发环境下更快的原因主要有以下几点：
+
+ESM 预构建： Vite 利用浏览器对原生 ESM（ES Modules）的支持，直接使用原生的 ESM 模块引入方式，无需像 Webpack 一样进行模块打包和编译。这样可以避免了 Webpack 在每次修改代码后都需要重新构建整个应用的开销。
+
+按需编译： Vite 只编译正在编辑的文件，而不是像 Webpack 那样需要处理整个项目的代码。当你修改一个文件时，Vite 会根据需要仅重新编译该文件及其相关依赖，而不会重新构建整个应用，从而大大加快了开发过程中的热重载速度。
+
+快速的热模块替换（HMR）： Vite 使用了基于浏览器原生模块系统的热模块替换机制，可以在应用运行时实现模块级别的热更新，而无需刷新整个页面。这样可以加快开发人员在修改代码时看到变化的速度。
+
+简化的构建过程： Vite 的构建过程相对简单，它将大部分的工作转移到了开发过程中，并且在生产环境下利用 Rollup 进行构建。相比之下，Webpack 具有更多的功能和配置选项，因此构建过程可能更复杂和耗时。
+
+需要注意的是，尽管 Vite 在开发环境下更快，但在生产环境下 Webpack 通常更适合，因为 Webpack 在打包和优化方面提供了更多的功能和插件支持。所以在项目部署时，通常会使用 Webpack 进行生产构建
+
+
+
+
+
+
+
+
+8、检查web性能的方法？
+
+
+1、从登录模块的看法
+2、页面相应2.3秒，如何解决？
+3、老项目需要重构哪些角度入手？
+
+
+
+1、浏览器执行过程？
+获取资源： 浏览器根据用户输入的URL请求服务器获取HTML、CSS、JavaScript等资源文件。这个过程涉及网络通信，包括DNS解析、建立TCP连接、发送HTTP请求等。
+
+解析HTML： 浏览器将获取到的HTML文件进行解析，解析器会逐行读取HTML代码，识别标签、属性和内容，并构建DOM树（文档对象模型）。解析过程中，遇到外部资源（如CSS、JavaScript文件）的引用，会发起新的请求获取这些资源。
+
+解析CSS： 浏览器解析CSS样式表，构建CSSOM（CSS对象模型）树。解析器会读取CSS代码，识别样式规则和选择器，并计算出每个元素的最终样式。
+
+合并生成渲染树： 浏览器将DOM树和CSSOM树进行合并，生成渲染树（Render Tree）。渲染树只包含需要显示的元素和相关样式信息，用于后续的布局和绘制。
+
+布局（回流）： 渲染树中的每个节点都被分配了位置和大小信息，这个过程称为布局（也称为回流或重排）。浏览器根据渲染树的结构和样式信息计算每个元素在屏幕上的准确位置。
+
+绘制（重绘）： 根据布局阶段计算得到的位置和大小信息，浏览器将渲染树中的元素绘制在屏幕上，形成用户可见的图像。这个过程称为绘制（也称为重绘）。
+
+JavaScript执行： 当浏览器遇到JavaScript代码时，会调用JavaScript引擎执行代码。执行期间，JavaScript可以操作DOM、修改样式、处理事件等，以实现交互和动态效果。
+
+事件处理： 浏览器会监听用户的交互事件（如点击、滚动、输入等），并触发相应的事件处理函数。事件处理函数可以是事先定义好的JavaScript代码，也可以是通过事件属性直接指定的匿名函数。
+
+需要注意的是，以上过程并非一次性完成，而是在整个浏览器生命周期中重复执行的。例如，用户滚动页面、调整窗口大小或触发其他交互事件时，浏览器需要重新进行布局、绘制等操作。
+
+浏览器执行的详细过程涉及多个模块和算法的协同工作，以提供丰富的浏览体验。不同浏览器可能在具体实现上有所差异，但大致遵循上述流程。优化这些过程可以提高网页加载速度和用户体验。
+
+
+
+2、浏览器缓存、tcp四次握手？
+3、前端最新的咨询？
