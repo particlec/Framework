@@ -1,0 +1,13 @@
+React Hooks  -----ahooks 使用场景
+使用：
+npm install --save ahooks
+ 或 yarn add ahooks
+ //使用
+ import { useRequest } from 'ahooks'
+
+ useRequest 是一个强大的异步数据管理的 Hooks，React 项目中的网络请求场景使用 useRequest就够了
+
+ const {  data, error, loading,run } = useRequest(service, {
+  manual: true//若设置了这个参数,则不会默认触发,需要通过run触发
+  defaulParams:[]//首次默认执行时，传递给 service 的参数
+});
