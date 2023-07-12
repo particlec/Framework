@@ -18,6 +18,10 @@ useSate set 的时候需要复制数据 （拷贝一份），而  updateProduct(
 
  useImmer 是使用 proxy 实现的 
  useSate   react使用useState修改对象或者数组的值无法改变视图的问题？   http://news.558idc.com/464360.html
+ 未发生改变的原因可能是因为needLists本身并没有变化，因为needLists变量存储的地址是不变的
+
+解决办法
+通过数据结构让传入的新值和原来的数组指向的不是同一片内存 （拷贝一份新的），就能触发dom的更新
 
 
  react 全家桶：

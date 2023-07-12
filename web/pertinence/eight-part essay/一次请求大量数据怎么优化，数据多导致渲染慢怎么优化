@@ -1,0 +1,33 @@
+个人觉得这就是个伪命题，首先后端就不该一次把大量数据返回前端，但是会这么问，那么我们作为面试的就老老实实回答呗。
+
+首先大量数据的接收，那么肯定是用异步的方式进行接收，对数据进行一个分片处理，可以拆分成一个个的小单元数据，通过自定义的属性进行关联
+
+
+网关、默认分页接口、 第一次获取数量， Promise.all 异步 发送接口
+默认分页接口、肯定是批次调用
+异步  Promise.all  会导致一次失败后停止调用
+如果想 失败一次后继续调用  Promise.allSettled
+
+
+ let temporaryArr: any[] = [];
+        const remainder = Math.ceil(tableIdList.length / 150);
+        const apiList: any[] = [];
+
+        for (let i = 0; i < remainder; i++) {
+          const temporaryParam = tableIdList.slice(i * 150, 150 * (i + 1));
+          apiList.push(functionApi.exportFunction(temporaryParam));
+        }
+        Promise.all(apiList.map(p => p.catch(e => [] )))
+          .then((result) => {
+            temporaryArr = result.map((obj) => obj.data);
+          })
+          .catch((e) => console.log(e));
+
+        JsonFileExport({ functions: temporaryArr }, "functions.txt");
+
+
+我也遇到了这种场景，for 和Promise.all，都用过，for会导致，上一次接口调用完，下一次才调，
+Promise.all会导致一次失败后停止调用，
+建议使用Promise.allSettled 或者 包一层Promise.all([p1, p2, p3].map(p => p.catch(e => '出错后返回的值' ))) .then(values =>......
+
+web3
