@@ -17,6 +17,8 @@ useSate set 的时候需要复制数据 （拷贝一份），而  updateProduct(
 已旧数据为入参的函数，直接在函数里操作这个对象
 
  useImmer 是使用 proxy 实现的 
+ useImmer 实现  proxy 监听对象属性变化，通过set、get方法修改了就拷贝一份，与原来的合并
+
  useSate   react使用useState修改对象或者数组的值无法改变视图的问题？   http://news.558idc.com/464360.html
  未发生改变的原因可能是因为needLists本身并没有变化，因为needLists变量存储的地址是不变的
 

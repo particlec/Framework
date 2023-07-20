@@ -11,3 +11,14 @@ npm install --save ahooks
   manual: true//若设置了这个参数,则不会默认触发,需要通过run触发
   defaulParams:[]//首次默认执行时，传递给 service 的参数
 });
+
+
+useReactive
+
+ const graphState = useReactive<{ graph: Graph | undefined }>({
+    graph: undefined,
+  });
+
+  useMount(() => {
+    graphState.graph = initialGraph(graphDomRef.current as HTMLDivElement);
+  });
