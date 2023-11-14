@@ -19,6 +19,7 @@ JS 深拷贝的具体实现
 深拷贝基础版: 利用for in  把对象的每个元素遍历，在利用递归自身,把内部全部复制一遍
 
 const cloneObjectFirst = (target)=>{
+    
    if(typeof target ==="Object"){
    const cloneTarget = {}
    for(const key in target){
@@ -163,3 +164,147 @@ C:\Users\86173\Desktop\新建文件夹>node 1.js
   func2: [Function: func2]
 }
 
+
+chatgpt版
+function deepCopyWithCircular(obj, cache = new WeakMap()) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj;
+  }
+
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  if (Array.isArray(obj)) {
+    const newArray = [];
+    cache.set(obj, newArray);
+    for (let i = 0; i < obj.length; i++) {
+      newArray[i] = deepCopyWithCircular(obj[i], cache);
+    }
+    return newArray;
+  }
+
+  if (obj instanceof RegExp) {
+    return new RegExp(obj.source, obj.flags);
+  }
+
+  if (obj instanceof Function) {
+    return function (...args) {
+      return obj.apply(this, args);
+    };
+  }
+
+  const newObj = Object.create(Object.getPrototypeOf(obj));
+  cache.set(obj, newObj);
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      newObj[key] = deepCopyWithCircular(obj[key], cache);
+    }
+  }
+  return newObj;
+}
+
+// 示例用法
+const originalObj = {
+  a: 1,
+  b: [2, 3, 4],
+  c: {
+    d: 5,
+    e: {
+      f: 6
+    }
+  }
+};
+
+originalObj.circularRef = originalObj; // 循环引用
+
+const copiedObj = deepCopyWithCircular(originalObj);
+console.log(copiedObj);
+这个示例中，deepCopyWithCircular 函数使用了一个 cache 参数，这是一个 WeakMap 对象，用于存储已经拷贝过的对象，以避免处理循环引用时的无限递归。同时，对于正则表达式和函数，我们分别创建了新的实例，以确保拷贝的完整性。
+
+请注意，尽管这个示例可以处理循环引用、函数和正则表达式，但仍然可能存在一些特殊情况没有涵盖到。在实际应用中，你可能会遇到更多复杂的情况，因此建议使用成熟的库来进行深拷贝，比如 Lodash 的 _.cloneDeep 或者其他类似的工具函数。
+
+
+
+  const target = {
+    field1: 1,
+    field2: undefined,
+    field3: {
+        child: 'child'
+    }as any,
+    field4: [2, 4, 8],
+    empty: null,
+    bool: new Boolean(true),
+    num: new Number(2),
+    str: new String(2),
+    symbol: Object(Symbol(1)),
+    date: new Date(),
+    reg: /\d+/,
+    error: new Error(),
+    func1: () => {
+        console.log('code秘密花园');
+    },
+    func2: function (a:any, b:any) {
+        return a + b;
+    }
+};
+
+target.field3.child = target;
+// 2023 0817 都不管循环引用了？
+console.log(_.cloneDeep(target))
+
+
+https://blog.csdn.net/weixin_44384273/article/details/131803653?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-131803653-blog-130645272.235%5Ev38%5Epc_relevant_anti_vip_base&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-2-131803653-blog-130645272.235%5Ev38%5Epc_relevant_anti_vip_base&utm_relevant_index=5
+
+
+
+用 Javascript 实现深拷贝并处理循环引用,可以这样做:
+
+定义一个 Map 来记录已经拷贝过的对象
+在拷贝对象时,先检查 Map 中是否存在该对象:
+如果存在,直接返回 Map 中的那个拷贝对象
+
+如果不存在,开始拷贝对象:
+
+对数组,拷贝一个空数组
+对对象,拷贝一个空对象
+在拷贝对象时,将原对象作为 key,拷贝的对象作为 value 存入 Map
+递归拷贝对象的各个属性,递归时仍传入这个 Map
+这样通过 Map 记录已经拷贝过的对象,就可以解决循环引用的问题:当再次遇到循环引用的对象时,直接返回已拷贝过的对象即可。
+
+整体思路是利用 Map 进行一层缓存,避免循环引用时陷入递归死循环。
+
+
+function deepClone(obj, hash = new Map()) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj;
+  }
+
+  if (hash.has(obj)) {
+    return hash.get(obj); 
+  }
+
+  let cloneObj = Array.isArray(obj) ? [] : {};
+
+  hash.set(obj, cloneObj);
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      cloneObj[key] = deepClone(obj[key], hash);
+    } 
+  }
+
+  return cloneObj;
+}
+
+// Usage:
+let obj = {
+  a: 1,
+  b: {
+    c: 2
+  }
+};
+
+obj.b = obj; // Circular reference
+
+let objClone = deepClone(obj);

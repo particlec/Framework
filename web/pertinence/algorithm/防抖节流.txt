@@ -1,0 +1,49 @@
+什么是防抖节流，如何实现？
+
+防抖的目的是确保在短时间内多次触发函数时，只有最后一次触发会被执行，从而减少函数的频繁执行
+
+核心：clearTimeout 每次点击都会重新触发，在执行完成前，
+二、为了保证  timeout 拿到上次的 
+debounce 
+
+
+
+ const debounceArr = (func:any, wait:any) => {
+    let timeout:any;
+    return (...args:any) => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, args);
+      },wait);
+    }
+  }
+
+  var person = {
+    fullName: function(city, country) {
+      return this.firstName + " " + this.lastName + "," + city + "," + country;
+    }
+  }
+  var person1 = {
+    firstName:"John",
+    lastName: "Doe"
+  }
+  person.fullName.apply(person1, ["Oslo", "Norway"]);
+  结果是 "John Doe,Oslo,Norway"   person1 里面的东西，绑定到函数，函数里this 可以引用      .["Oslo", "Norway"]当做函数参数
+
+  函数节流（Throttling）是一种限制函数在一定时间间隔内执行的方法，以控制函数的频繁调用。
+  节流可以确保在短时间内多次触发函数时，函数只会以一定的频率执行，从而降低资源的消耗
+
+  节流:设定最小间隔，记录时间点击成功后记录时间，比对最小间隔，大于最小间隔，执行并记录时间
+
+  function throttle(func, delay) {
+    let lastTime = 0;
+  
+    return function(...args) {
+      const currentTime = new Date().getTime();
+      if (currentTime - lastTime >= delay) {
+        func.apply(this, args);
+        lastTime = currentTime;
+      }
+    };
+  }
+  

@@ -9,6 +9,11 @@ useMemo ： 需要返回会值 ，他会根据依赖项，更新返回值，如�
 
 useCallback：useMemo与 useMemo 类似，也有依赖项，但是 useCallback 返回的是一个函数
 
+
+
+npm install immer use-immer
+import { useImmer } from "use-immer";
+
 useImmer：对标的是useState ，他们都可以存储数据，但是操作复杂的结构时，
 useSate set 的时候需要复制数据 （拷贝一份），而  updateProduct({ ...product, name: "Product 1 - Updated" })
 而 useImmer set 的时候可以直接改 不需要复制 updateProduct((draft) => { 
