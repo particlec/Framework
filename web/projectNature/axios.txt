@@ -9,3 +9,5 @@ const instance = axios.create({
   },
 });
  process.env.NODE_ENV webpack中判断是否为本地环境，本地环境就给一个 默认域名，生产环境就给当前域名
+ 
+ 

@@ -1,0 +1,7 @@
+https://jueji  n.cn/post/7182382408807743548
+最新 React18 版本
+1、react 18 版本有什么新特性
+.去掉了对IE浏览器的支持
+.多次setState会自动被合并为1次执行，提高了性能
+.支持new concurrent renderer(并发模式的渲染)（没有用的过）
+.flushSync函数，函数需传入一个回调, 并且会同步刷新回调中的状态更新

@@ -1,0 +1,38 @@
+[[1, 2, 3], [4, 5], [6, 7]]变成[1, 2, 3, 4, 5, 6, 7]
+就多维数组 转化成 一维数组 的过程
+
+1、遍历拼装过程
+const flatActionRef = (arr:any[]):any => {
+    let res:any = [];
+    for(let i=0;i<res.length;i++){
+      if(Array.isArray(arr[i])){
+        res = res.concat(flatActionRef(arr[i]));
+    } else {
+      res.push(arr[i])
+    }
+     }
+      return res;
+  }
+
+2、es6   arr.flat(Infinity)
+
+arr.flat()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://blog.csdn.net/wuxian_wj/article/details/122259772
+
+https://juejin.cn/post/7257922419319308344#heading-23
+
+
